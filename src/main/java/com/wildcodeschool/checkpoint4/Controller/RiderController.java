@@ -1,7 +1,6 @@
 package com.wildcodeschool.checkpoint4.Controller;
 
 import com.wildcodeschool.checkpoint4.Entity.Rider;
-import com.wildcodeschool.checkpoint4.Entity.User;
 import com.wildcodeschool.checkpoint4.Repository.RiderRepository;
 import com.wildcodeschool.checkpoint4.Repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,9 +14,6 @@ public class RiderController {
     @Autowired
     private RiderRepository riderRepository;
 
-    @Autowired
-    private UserRepository userRepository;
-
     @PostMapping("/rider")
     public Rider create(@RequestBody Rider rider) {
         return riderRepository.save(rider);
@@ -28,5 +24,9 @@ public class RiderController {
         return riderRepository.findAll();
     }
 
+    @GetMapping("/rider/{idRider}")
+    public Rider readRiderById(@PathVariable Long idRider) {
+        return riderRepository.findById(idRider).get();
+    }
 
 }

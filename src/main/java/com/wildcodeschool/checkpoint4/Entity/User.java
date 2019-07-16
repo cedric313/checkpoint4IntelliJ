@@ -1,7 +1,5 @@
 package com.wildcodeschool.checkpoint4.Entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
