@@ -1,12 +1,11 @@
 package com.wildcodeschool.checkpoint4.Entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Circus implements Serializable {
@@ -28,6 +27,16 @@ public class Circus implements Serializable {
     private String location;
 
     private String urlPhoto;
+
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE
+            })
+    @JoinTable(name = "circusRiders",
+            joinColumns = {@JoinColumn(name = "idRider")},
+            inverseJoinColumns = {@JoinColumn(name = "idCircus")})
+    private List<Rider> riders = new ArrayList<>();
 
     public Circus() {
     }
@@ -70,5 +79,13 @@ public class Circus implements Serializable {
 
     public void setUrlPhoto(String urlPhoto) {
         this.urlPhoto = urlPhoto;
+    }
+
+    public List<Rider> getRiders() {
+        return riders;
+    }
+
+    public void setRiders(List<Rider> riders) {
+        this.riders = riders;
     }
 }

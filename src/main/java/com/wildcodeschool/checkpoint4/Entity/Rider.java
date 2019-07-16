@@ -1,11 +1,12 @@
 package com.wildcodeschool.checkpoint4.Entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Rider implements Serializable {
@@ -29,9 +30,28 @@ public class Rider implements Serializable {
     @NotNull
     private String urlPicRider;
 
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE
+            },
+            mappedBy = "riders")
+    @JsonIgnore
+    private List<User> users = new ArrayList<>();
+
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE
+            },
+            mappedBy = "riders")
+    @JsonIgnore
+    private List<Circus> circuses = new ArrayList<>();
+
 
     public Rider() {
     }
+
 
     public Long getIdRider() {
         return idRider;
@@ -79,5 +99,21 @@ public class Rider implements Serializable {
 
     public void setUrlPicRider(String urlPicRider) {
         this.urlPicRider = urlPicRider;
+    }
+
+    public List<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<User> users) {
+        this.users = users;
+    }
+
+    public List<Circus> getCircuses() {
+        return circuses;
+    }
+
+    public void setCircuses(List<Circus> circuses) {
+        this.circuses = circuses;
     }
 }
